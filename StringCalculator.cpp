@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <StringCalculator.h>
 
-int add(const char *input_string) {
+int add(char *input_string) {
     int sum = 0;
     int current_number = 0;
     int in_number = 0;  // Flag to track if currently parsing a number
