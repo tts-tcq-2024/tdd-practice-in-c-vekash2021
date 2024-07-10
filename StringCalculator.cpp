@@ -4,25 +4,34 @@
 #include <stdlib.h>
 #include <StringCalculator.h>
 
-// Function to add two numbers from a string
-int add(const char* input_string) {
-    size_t input_length = strlen(input_string);
-    char* input_copy = (char*)(input_length + 1); 
-    if (input_copy == NULL) {
-         return -1; 
+int add(const char *input_string) {
+    int sum = 0;
+    int current_number = 0;
+    int in_number = 0;  // Flag to track if currently parsing a number
+    
+    // Traverse through each character of the input string
+    while (*input_string) {
+        if (isdigit(*input_string)) {
+            current_number = current_number * 10 + (*input_string - '0');
+            in_number = 1;
+        } else {
+            // If we were parsing a number, add it to sum if it's <= 1000
+            if (in_number) {
+                if (current_number <= 1000) {
+                    sum += current_number;
+                }
+                current_number = 0;
+                in_number = 0;
+            }
+        }
+        input_string++;
     }
-    strcpy(input_copy, input_string); // 
-
-    int sum = check_for_empty_string(input_copy);
-   return sum;
-}
-
-// Function to check if the string is empty
-int check_for_empty_string(const char* input_string) {
-    if (*input_string == '\0') {
-        return 0; // String is empty
-    } else {
-        return -1; // String is not empty
+    
+    // Add the last number if the string ends with a number <= 1000
+    if (in_number && current_number <= 1000) {
+        sum += current_number;
     }
+    
+    return sum;
 }
 
