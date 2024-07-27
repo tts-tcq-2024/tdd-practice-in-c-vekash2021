@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <StringCalculator.h>
+
 
 int add(const char *input_string) {
     int sum = 0;
