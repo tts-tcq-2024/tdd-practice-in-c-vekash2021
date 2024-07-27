@@ -1,8 +1,11 @@
+#include <ctype.h>
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
+int add_number_to_sum(int current_number, int sum) {
+    if (current_number <= 1000) {
+        sum += current_number;
+    }
+    return sum;
+}
 
 int add(const char *input_string) {
     int sum = 0;
@@ -14,24 +17,18 @@ int add(const char *input_string) {
         if (isdigit(*input_string)) {
             current_number = current_number * 10 + (*input_string - '0');
             in_number = 1;
-        } else {
-            // If we were parsing a number, add it to sum if it's <= 1000
-            if (in_number) {
-                if (current_number <= 1000) {
-                    sum += current_number;
-                }
-                current_number = 0;
-                in_number = 0;
-            }
+        } else if (in_number) {
+            sum = add_number_to_sum(current_number, sum);
+            current_number = 0;
+            in_number = 0;
         }
         input_string++;
     }
     
     // Add the last number if the string ends with a number <= 1000
-    if (in_number && current_number <= 1000) {
-        sum += current_number;
+    if (in_number) {
+        sum = add_number_to_sum(current_number, sum);
     }
     
     return sum;
 }
-
